@@ -11,12 +11,26 @@ PS: I think you are all under-estimating
 
 ## Q:
 
+As regards the last two features i.e. running FB-Infer on PEOS.
+If for example we decided not to use PEOS and to use your generated PML Parsers, could we still be assigned the last 2 features to complete?
+
+### A:
+
+Yes --- those features are about improving PEOS in a specific way. You can contribute even if you don't use it. Just keep in mind, when estimating, that there may be an additional cost to you to do this if is not part of your regular build.
+
+## Q:
+
 Could we get clarification on what the Error and Warning highlighting would entail?
 
 Is it just highlighting the most important errors?
 Or is it highlighting the conflicts in a pathway?
 
 ### A:
+
+The precise answer depends on how you are handling and displaying the PML. Basically once a PML file is loaded, some way needs to be devloped to bring any errors and warnings to the attention of the user. What is not wanted is forcing the read to work through a list of log message, most of the harmless, in order to find the warnings and errors.
+
+Whether these are automatically shown in full, or simply given a one-line alert to their presence
+and then require the user to request the details, is a matter of user-interface design. 
 
 ## Q:
 
