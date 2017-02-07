@@ -9,6 +9,59 @@
 PS: I think you are all under-estimating 
 (remember all the work required to ***deliver*** a feature: code, test, document, deliver)
 
+PPS: Especially any feature involving DINTO !
+(Hint: lookup SPARQL and RDF)
+
+## Q:
+
+DINTO re-structuring: What would the scale and nature of this re-structuring be?
+
+### A: 
+
+Considerable. They distribute using .zip even though the OBOFoundry requires them to have an owl file available unwrapped. This is because their full owl file is too large for github filesize restrictions.
+This feature involves trying out the modularization referred to in [DINTO Issue 1](https://github.com/labda/DINTO/issues/1).
+
+It is a seriously non-trivial exercise to split an OWL file into parts, as there can be arbitrary cross-references between different components.
+
+I think we may defer this to Release 2.
+
+## Q:
+
+DINTO Error and Warning highlights: what would the source of these errors be? Malformed .owl files or dangerous drug combinations that should produce a warning?
+
+### A:
+
+Malformed .owl files.
+
+## Q:
+
+Identify DDIs: Does this involve identifying all of those drugs that would interact with a certain specified drug?
+
+### A:
+
+Yes. You have to do this for every drug mentioned in the particular PML file being processed,
+but *only for other drugs that are also mentioned in that PML file*. There is point in a pathway finding interactions between drugs that are not used by thst pathway.
+
+The app workflow would be something like:
+
+1. Load PML file of Clinical Pathway under consideration
+  2. Check for malformed PML
+  3. If malformed give user option to abort/continue
+2. Load DINTO
+  3. Check for malformed OWL
+  4. If malformed, inform user, and quit.
+3. Identify DDIs and report to user
+4. Assist user in improiong pathways
+5. Save new improved pathway
+
+## Q:
+
+Identify drugs in DINTO: Is this a simple "lookup", given a drug name or alias?
+
+### A:  
+
+It depends on how the drug is described in PML, which has to be determined by another feature. Initially it will suffice to find some "interesting" drugs in DINTO and add their identifers (somehow) to PML.
+
 ## Q:
 
 As regards the last two features i.e. running FB-Infer on PEOS.
