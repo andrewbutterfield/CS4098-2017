@@ -25,14 +25,16 @@ It must run on either Ubuntu 16.04 or OS X (Sierra).
 ## Product Backlog 
 ###(Revised for Release 2)
 
+**Due** 23:59, Sun 9th April 2017
+
 The features below are intended to be more polished and part of a system that integrates with DINTO. So a uniform look and feel will be wanted.
 
 All features appear below in bulleted lists
 where each entry starts with a  `Feature Tagline` and possibly some explanatory text:
 
-* `Feature One`
+* `Feature One`  
 What one is all about
-* `Feature Numero Duo`
+* `Feature Numero Duo`  
 Key aspects of number 2
 
 ... and so on.
@@ -41,7 +43,7 @@ You are also always welcome to suggest features!
 
 ### Carried over from Release 1
 
-Some of these you may have already done. Also some of them are now or may be  subsumed by new more detailed Release 2 features.
+Some of these you may have already done. Also some of them are now, or may be,  subsumed by new more detailed Release 2 features.
 
 * `Identify drugs in PML`
 * `Lookup drugs in DINTO`
@@ -49,8 +51,6 @@ Some of these you may have already done. Also some of them are now or may be  su
 * `Adding Time to PML` (**subsumed**)
 * `DDI Timing Analysis` (**subsumed**)
 * `DDI-aware Pathway modifications` (*may be subsumed*)
-* `fbinfer-friendly PEOS` Fix the PEOS makefiles so that [fbinfer](http://www.fbinfer.com) can easily check all the sources. 
-* `fbinfer-proof PEOS` Fix the PEOS sources so that [fbinfer](http://www.fbinfer.com) no longer reports any errors.
 
 ### Clinical Pathway features
 
@@ -60,11 +60,11 @@ We shall expect a well-formed Clinical Healthcare Pathway PML file to always hav
 
 #### New ways to break PML files
 
-* `Report un-named PML construct`
+* `Report un-named PML construct`  
 A construct in PML without a name should be reported in a warning, which should give the line number of the construct.
-* `Report PML construct name-clash`
+* `Report PML construct name-clash`  
 If two PML constructs have the same name, this should be reported, identifying the clashing name, and the kinds of construct involved. Again line numbers would be given.
-* `Report use of task construct`
+* `Report use of task construct`  
 The `task` construct in PML is now deprecated. It is interpreted the same as `sequence`. This feature identifies and reports all use of the `task` construct.
 
 #### Identifying Drug Interference
@@ -93,34 +93,34 @@ If we choose to modify PML syntax, then we could add the notion of some way to s
 
 All the features below do not specify how you handle this issue. You can choose to leave PML syntax alone, and use special actions to capture timing requirements, or take the step to add attributes (timing or otherwise) to the other language constructs. You may even want to mix both approaches. How you handle this is entirely up to you, but you should feel free to consult the customer/product owner about anything you plan to do here.
 
-* `Specifying Periodic Drug Use`
+* `Specifying Periodic Drug Use`  
 Provide a way to specify in PML that a given drug is to be given at a regular interval. The feature should report/log all such specifications.
 
-* `Specifying Sequential Drug Use Gap`
+* `Specifying Sequential Drug Use Gap`  
 Given two drugs that participate in a Sequential DDI (see above) provide a way to stipulate the minimum time gap between the administration of the two drugs. 
 
-* `Specifying Parallel Drug Use Gap`
+* `Specifying Parallel Drug Use Gap`  
 Given two drugs that participate in a Parallel DDI (see above) provide a way to stipulate the minimum time gap between the administration of the two drugs. 
 
-* `Specifying Repeated Alternative Drug Use Gap`
+* `Specifying Repeated Alternative Drug Use Gap`  
 Given two drugs that participate in a Repeated Alternative DDI (see above) provide a way to stipulate the minimum time gap between the administration of the two drugs. 
 
-* `Specify a Delay`
-Provide a way to say, at any point in a sequential workflow, that the enactment of the pathway will pause/delay for a give time.
+* `Specify a Delay`  
+Provide a way to say, at any point in a sequential workflow, that the enactment of the pathway will pause/delay for a given time.
 
-* `Specify a time interval offset`
+* `Specify a time interval offset`  
 This corresponds to specifying a day for a week long interval (e.g. "Monday") or a time within a daily interval (e.g., "9am", "afternoon", etc). It may be implemented as a modifier of some sort for the Periodic Drug Use feature above.
 
 #### Timing Analysis
 
-* `Report Timing Inconsistencies`
+* `Report Timing Inconsistencies`  
 A PML file may have timings that are not feasible. For example, an iteration may have a specification that it repeats daily, but may contain an action with a one-week delay. This features checks the timings to ensure such inconsistent timing are not present. Any inconsistencies should be reported as an error that precludes any further timing analysis.
 
-* `Identify DDI Closest Approach`
+* `Identify DDI Closest Approach`  
 Given drugs participating in a DDI, and a PML description with or without timing information, identify and report the closest the drugs might be administered to each other in time. Any resulting time interval greater than zero must be justified by the available timing and control-flow information. If the drugs can never be administered together in a complete run of the behaviour given in the PML file, then a result of 'infinity' should be reported. This feature is designed to identify adverse DDIs that may need to be moved further part.
 
-* `Identify DDI Furthest Separation`
-Given drugs participating in a DDI, and a PML description with or without timing information, identify and report the farthest apart the drugs might be administered to each other in time. Any resulting time interval greater than zero must be justified by the available timing and control-flow information. If the drugs can never be administered together in a complete run of the behaviour given in the PML file, then a result of 'infinity' should be reported. This feature is intended to spot good DDIs that could be made more benefical if brought closer together.
+* `Identify DDI Furthest Separation`  
+Given drugs participating in a DDI, and a PML description with or without timing information, identify and report the farthest apart the drugs might be administered to each other in time. Any resulting time interval less than infinity must be justified by the available timing and control-flow information. If the drugs can never be administered together in a complete run of the behaviour given in the PML file, then a result of 'infinity' should be reported. This feature is intended to spot good DDIs that could be made more benefical if brought closer together.
 
 
 #### PML Refactoring
@@ -129,29 +129,106 @@ We may want to merge a number of clinical pathways,
 perhaps by putting them in parallel to begin with.
 After DDI/timing analysis we might want to try some transformations to the PML to improve matters. In effect these are features that change the PML anstract syntax tree, and which need to be able to outpur well-formed PML.
 
+* `Merging Clinical Pathways written in PML`   
+Given a number of PML files each containing a helthcare pathway, merge these into a new PML file by putting each pathway into its own arm of a top-level branch construct, which will, of course, need to be named
+(see "Report un-named construct" above).
+
 PML transformations fall into two basic categories:
 
 1. *try-it-and-see:* just do some transformation that takes no account of any DDI or timing information, and then re-analyse, and make a keep or discard decision based on the new analysis results (relativey easy)
 
 Simple transformations could include converting a sequential to a branch, or vice-versa. We may also want to distinguish between semantics preserving/changing transformations. 
 
-So for example, changing `sequence{ a ; b}`
-to `branch{ a ; b}` is semantics changing,
-while changing `branch{ a ; b}` to
-`selection{ sequence{ a; b} ; sequence {b;a} }`
+So for example, given P and Q representing arbitrary pieces of well-formed PML,
+changing `branch{P;Q}`
+to `sequence{P;Q}` is semantics changing,
+while changing `branch{P;Q}` to
+`selection{sequence{P;Q};sequence{Q;P}}`
 is semantics preserving (can you see why?).
 
-2. *smart-adaptation:* based on current structure and analysis result, determine an improving transfoprmation in advance and apply it (HARD).
+2. *smart-adaptation:* based on current structure and analysis result, determine an improving transformation in advance and apply it (HARD).
 
-We will probably just stick with try-it-and-see!
+We now give a series of PML transformation features, named `PML-TX ....`. All transformations require some way for the user to designate an appropriate language construct in the PML file. All transformations need to ensure that any introduced constructs have names.
 
-* `Merging Clinical Pathways written in PML` 
-Given a number of PML files each containing a helthcare pathway, merge these into a new PML file by putting each pathway into its own arm of a top-level branch construct, which will, of course, need to be named
-(see "Report un-named construct" above).
+* `PML-TX Save PML to File`  
+No point in transforming PML below if we can't save it afterwards!
 
-* `PML transformations?`
-This will be a list of features, each implementing an individual transformation. To appear! 
+* `PML-TX Serialise Branch (Naive)`  
+Thss converts a designated branch construct into a sequence:  
+
+```
+branch{P1;..;Pn} --> sequence{P1;..;Pn}
+```
+This is not a semantics preserving transformation, but is in fact a refinment that removes all the non-determinism in a simplistic manner.
+
+* `PML-TX Serialize Branch (Two-Way)`  
+This convert a designated `branch` construct with two components into a selection of sequences, according to the rule:
+
+```
+branch{P;Q} 
+ = selection{sequence{P;Q};sequence{Q;P}}
+```
+
+
+* `PML-TX Serialize Branch (Three-Way)`  
+This converts a designated `branch` construct with three components into a selection of sequences, according to the rule:  
+
+```
+branch{P;Q;R} 
+ = selection{ sequence{P;Q;R}; sequence{P;R;Q}  
+            , sequence{Q;P;R}; sequence{Q;R;P}
+            , sequence{R;P;Q}; sequence{R;Q;P} }
+```
  
+* `PML-TX Serialize Branch (n-Way)`  
+This converts a designated `branch` construct to selection of sequences, one for each possible ordering of the n original branches
+
+```
+branch{P1;..;Pn}
+ = selection{ sequence{P1;..;Pn}
+            ; ...
+            ; sequence{Pn;..;P1} }
+```
+
+* `PML-TX Remove Selections`  
+This takes a designated `selection` construct,
+and a choice of one or more of its components (but not all of them) and removes them. 
+
+```
+selection{P1;..Pa;Pb;Pc;..;Pn} less [Pb]
+ = selection{P1;..;Pa;Pc;..;Pn}
+```
+
+It is not semantics preserving, but is instead a refinement - it removes some non-determinism. 
+
+* `PML-TX Unroll Iteration`  
+Given a designated iteration, and a number, un-roll the loop that number of times using the following laws for a single unroll:  
+
+```
+iteration{P} = sequence{P;iteration{P}}
+iteration{P;Q;..;R}
+ = sequence{P;Q;..;R;iteration{P;Q;..;R}}
+```
+
+Note that an iteration with multiple sub-components treats those sub-components as being in sequence. This is a refinement.
+
+* `PML-TX Parallelise Sequence`  
+This converts a designated `sequence` construct into a branch: 
+
+```
+sequence{P1;..;Pn}
+ --> branch{P1;..;Pn}
+```
+It is not semantics preserving, being an anti-refinement that adds maximal non-determinism.
+
+* `PML-TX Rule-Based Transformation`  
+This takes a designated construct and tries
+to match it against a collection of transformation rules, applying the first that matches. A transformation rule is a rule similar to those shown above, with a lefthand side pattern and a righthand side outcome. A pattern is a nesting of sequence, branch, selection and iteration constructs, with variables to denote arbitrary PML components, as seen above. Notation like `P1;..;Pn` above is too vague and need not be supported, however a non-empty list
+of components can be specified using cons-notation.
+The rules may be semantics preserving, but can also be refinements or anti-refinements. Collections of rules will be stored in files, with a `.rules` extension. See `sample.rules` for examples.
+
+* `PML-TX Brute Force Time Optimisation`  
+Given a PML description with DDI Closest Approach figures that are considered too low, iteratively try out various transformations, re-running the `Identify DDI CLosest Approach` feature each time, to see if an improved result can emerge. Hint: prefer refinements, and definitely don't try any anti-refinements!
 
 ### Features no longer of interest
 
@@ -174,4 +251,8 @@ These include features that no longer seem relevant, are subsumed by new feature
    The DINTO files are very large, so the ability to pull out a useful test subset would be nice.
 * `DINTO re-structuring`
    The DINTO OWL files really need to be broken down in a modular fashion (see comments of 2 Feb 2016 in DINTO [Issue #1](https://github.com/labda/DINTO/issues/1)).
+* `fbinfer-friendly PEOS`  
+Fix the PEOS makefiles so that [fbinfer](http://www.fbinfer.com) can easily check all the sources. 
+* `fbinfer-proof PEOS`  
+Fix the PEOS sources so that [fbinfer](http://www.fbinfer.com) no longer reports any errors.
 
