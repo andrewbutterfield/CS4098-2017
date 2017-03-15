@@ -71,6 +71,11 @@ The `task` construct in PML is now deprecated. It is interpreted the same as `se
 
 This sub-group of features focusses on different ways in which a drug interaction may arise because of the pathway's control-flow. For Release 1 we took a coarse view - an interaction existed simply by the fact that a PML fle mentioned both drugs. Now we want to get more precise.
 
+* `Mock DDI Characterisation Data`  
+A file that contains records, each with four components: 
+2 drug names of drugs with a DDI, 
+an indicator that states if the DDI is good or bad,
+and a time limit within which the DDI is effective.
 * `Identify Sequential DDIs`
 A sequential DDI is one that arises because the PML contains a workflow in which the dispensing of one drug is always followed afterwards by the dispensing of another drug, that has an known interaction with the first. This feature should identify the drugs involved and the name of the smallest enclosing PML `sequence` construct.
 * `Identify Parallel DDIs`
@@ -153,6 +158,10 @@ We now give a series of PML transformation features, named `PML-TX ....`. All tr
 * `PML-TX Save PML to File`  
 No point in transforming PML below if we can't save it afterwards!
 
+* `PML-TX Reorder Sequence`  
+This takes a designated `sequence` construct and a permutation of the list [1..N] where N is the sequence length,
+and returns a sequence with its sub-constructs re-ordered correspondingly.
+
 * `PML-TX Serialise Branch (Naive)`  
 Thss converts a designated branch construct into a sequence:  
 
@@ -227,8 +236,14 @@ to match it against a collection of transformation rules, applying the first tha
 of components can be specified using cons-notation.
 The rules may be semantics preserving, but can also be refinements or anti-refinements. Collections of rules will be stored in files, with a `.rules` extension. See `sample.rules` for examples.
 
+* `Pathway Badness Ranking`  
+Use DDI and timing analysis results to compute a badness score for a PML pathway.
+
+* `PML-TX Gradient Descent Time Optimisation`  
+Given a PML description with a badness ranking considered too high, iteratively try out various transformations, re-running the `Pathway Badness Ranking` feature each time, and selecting the result if it is an improvement. Repeat until a pathways is found  that is not improved by any transformations. Hint: prefer refinements, and definitely don't try any anti-refinements!
+
 * `PML-TX Brute Force Time Optimisation`  
-Given a PML description with DDI Closest Approach figures that are considered too low, iteratively try out various transformations, re-running the `Identify DDI CLosest Approach` feature each time, to see if an improved result can emerge. Hint: prefer refinements, and definitely don't try any anti-refinements!
+Given a PML description with a badness ranking considered too high, iteratively try out various transformations, re-running the `Pathway Badness Ranking` feature each time, and then giving each result the same treatment. After a certain  number of transformations have been done, stop and return the best result. 
 
 ### Features no longer of interest
 
