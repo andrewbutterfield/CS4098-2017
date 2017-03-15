@@ -1,8 +1,8 @@
 # Semantic equivalence:   lhs = rhs
 # Refinement:             lhs < rhs
-# Anit-refinment:         lhs > rhs
+# Anti-refinment:         lhs > rhs
 
-sequence{P;sequence{Q;R}} = sequence{P;Q;R}
+seq-flatten: sequence{P;sequence{Q;R}} = sequence{P;Q;R}
 
 branch{P;Q} = selection{sequence{P;Q};sequence{Q;P}}
 
@@ -15,3 +15,5 @@ iteration{P} < sequence{P;iteration{P}}
 sequence{P;Q} > branch{P;Q}
 
 branch{P:Qs} < selection{sequence{P;branch{Qs}};sequence{branch{Qs};P}}
+
+
