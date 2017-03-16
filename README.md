@@ -6,7 +6,7 @@ Key items here will include:
 
 * Q & A regarding Feature Estimates
 * Group Details, esp. Group Names.
-* Product Backlog
-* Group Sprint (Release) Backlogs
+* Product Backlog (Relase 2 bidding)
+* PML Semantics
 
 Use Issues facility to suggest changes
