@@ -27,4 +27,4 @@ so avoiding any interaction with the evening drink.
 
 
 The other five files are simply copied from the ui/carepathways folder of peos,
-but will probably me modified later to have drug and timing information added.
+but will probably be modified later to have drug and timing information added.
