@@ -11,7 +11,7 @@ The zero-velocity release should contain
 
 1. the PEOS software developed by John Noll (see [https://github.com/jnoll/peos](https://github.com/jnoll/peos) )
 1. something that can read the OWL files from the DINTO repository (see [https://github.com/labda/DINTO.git](https://github.com/labda/DINTO.git) )
-2. Documentation that covers:
+2. Documentation that covers: 
   3. How to install these components
   4. How to test them
 
@@ -133,10 +133,11 @@ Given drugs participating in a DDI, and a PML description with or without timing
 We may want to merge a number of clinical pathways,
 perhaps by putting them in parallel to begin with.
 After DDI/timing analysis we might want to try some transformations to the PML to improve matters. In effect these are features that change the PML anstract syntax tree, and which need to be able to outpur well-formed PML.
+The features below are only required to work for Clinical Pathway PML files that parse successfully and with construct names used correctly.
 
 * `Merging Clinical Pathways written in PML`   
-Given a number of PML files each containing a helthcare pathway, merge these into a new PML file by putting each pathway into its own arm of a top-level branch construct, which will, of course, need to be named
-(see "Report un-named construct" above).
+Given a number of PML files each containing a healthcare pathway, merge these into a new PML file by putting each pathway into its own arm of a top-level branch construct, which will, of course, need to be named
+(see "Report un-named construct" above). Note that any name-clashes between different PML files need to be resolved.
 
 PML transformations fall into two basic categories:
 
