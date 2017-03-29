@@ -63,7 +63,7 @@ We shall expect a well-formed Clinical Healthcare Pathway PML file to always hav
 * `Report un-named PML construct`  
 A construct in PML without a name should be reported in a warning, which should give the line number of the construct.
 * `Report PML construct name-clash`  
-If two PML constructs have the same name, this should be reported, identifying the clashing name, and the kinds of construct involved. Again line numbers would be given.
+If two PML constructs have the same name, this should be reported, identifying the clashing name, and the kinds of construct involved. In this case line numbers would be nice, but are not mandatory.
 * `Report use of task construct`  
 The `task` construct in PML is now deprecated. It is interpreted the same as `sequence`. This feature identifies and reports all use of the `task` construct.
 
@@ -75,7 +75,7 @@ This sub-group of features focusses on different ways in which a drug interactio
 A file that contains records, each with four components: 
 2 drug names of drugs with a DDI, 
 an indicator that states if the DDI is good or bad,
-and a time limit within which the DDI is effective.
+and a time limit within which the DDI is effective. The time limit is specified as two parts: a number, and a time unit. The format to be used for this file is a CSV spreadsheet with five columns: drug1, drug2, indicator, number, time-unit.
 * `Identify Sequential DDIs`
 A sequential DDI is one that arises because the PML contains a workflow in which the dispensing of one drug is always followed afterwards by the dispensing of another drug, that has an known interaction with the first. This feature should identify the drugs involved and the name of the smallest enclosing PML `sequence` construct.
 * `Identify Parallel DDIs`
@@ -157,7 +157,7 @@ is semantics preserving (can you see why?).
 We now give a series of PML transformation features, named `PML-TX ....`. All transformations require some way for the user to designate an appropriate language construct in the PML file. All transformations need to ensure that any introduced constructs have names.
 
 * `PML-TX Save PML to File`  
-No point in transforming PML below if we can't save it afterwards!
+No point in transforming PML below if we can't save it afterwards! The save can overwrite the original file.
 
 * `PML-TX Reorder Sequence`  
 This takes a designated `sequence` construct and a permutation of the list [1..N] where N is the sequence length,

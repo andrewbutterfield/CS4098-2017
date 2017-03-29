@@ -1,5 +1,5 @@
 process Daily_StatinDrink_merge {
-  sequence Daily_Statin {
+  branch merged {
     iteration dailystatin {
       action Take_Statin {
         requires { prescription.drug == "statin" }
@@ -7,8 +7,6 @@ process Daily_StatinDrink_merge {
         script{ "Statin to be taken daily, in the evening"}
       }
     }
-  }
-  sequence Daily_Drink {
     iteration dailydrink {
       action Take_Drink {
         requires { shopping.product == "whiskey" } 
