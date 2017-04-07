@@ -12,7 +12,7 @@ The following lists what should be reported by the various "Construct DDI" featu
 
 ### `Identify Sequential DDIs`
 
-* SEQ1  (1,2) (1,3) (1,4)
+* SEQ1  (1,2) (1,3) (1,4) (2,4) (3,4)
 * SEQ2  (2,3)
 * SEQ3  (1,2) (1,3)
 * SEQ4  (2,4)
